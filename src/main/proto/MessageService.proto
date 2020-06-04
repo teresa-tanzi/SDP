@@ -1,0 +1,85 @@
+syntax = "proto3";
+package casa;        // dice dove salva la classe generata
+
+// richiesta di inserimento nella rete
+message HelloRequest {
+    int32 id = 1;
+    string ip = 2;
+    int32 porta = 3;
+}
+
+// risposta per l'inserimeno di una casa nella rete
+message HelloResponse {
+    bool ok = 1;    // ack
+    int32 id = 2;   // devo dire anche chi sono per far capire da dove arriva la risposta
+}
+
+// richiesta di uscita dalla rete
+message GoodbyeRequest {
+    int32 id = 1;
+}
+
+// risposta per l'uscita di una casa dalla rete
+message GoodbyeResponse {
+    bool ok = 1;             // ack
+    int32 id = 2;
+}
+
+// invio di una statistica locale alle altre case della rete
+message InvioStat {
+    message Statistica{
+        float valore = 1;
+        int64 timestamp = 2;
+    }
+
+    int32 id = 1;           // id della casa che ha prodotto la statistica
+    Statistica stat = 2;    // statistica prodotta
+}
+
+// ack della ricezione delle statistiche locali
+message AckStat {
+    int32 id = 1;
+    bool ack = 2;
+}
+
+// indico un'elezione
+message ElectionRequest {
+    int32 id = 1;
+}
+
+// dico se posso diventare o meno il nuovo coordinatore
+message ElectionResponse {
+    int32 id = 1;
+    bool coordinator = 2;
+}
+
+// richista della risorsa (corrente extra)
+message ExtraPowerRequest {
+    int32 id = 1;           // id del nodo che fa la richiesta
+    string resource = 2;    // nome della risorsa (anche se c'è solo quella)
+    int64 time = 3;         // tempo fisico della richiesta
+}
+
+// risposta alla richiesta della risorsa
+message ExtraPowerResponse {
+    int32 id = 1;
+    bool ok = 2;
+}
+
+// definizione del servizio
+service MessageService {
+    // un nuovo nodo si presenta nella rete
+    rpc hello(HelloRequest) returns (HelloResponse);
+
+    // un nodo chiede di uscire dalla rete
+    rpc goodbye(GoodbyeRequest) returns (GoodbyeResponse);
+
+    // un nodo manda le sue statistiche locali man mano che le calcola
+    rpc localStat(InvioStat) returns (AckStat);
+
+    // quando il coordinatore esce elegge un altro coordinatore
+    rpc election(ElectionRequest) returns (ElectionResponse);
+
+    // richiesta della corrente extra
+    rpc extraPower(ExtraPowerRequest) returns (ExtraPowerResponse);
+}

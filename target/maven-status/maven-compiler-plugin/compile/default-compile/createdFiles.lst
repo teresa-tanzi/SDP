@@ -1,0 +1,13 @@
+amministratore/Amministratore.class
+serverAmministratore/beans/ListaCase.class
+serverAmministratore/beans/Casa.class
+casa/MessageServiceImpl.class
+casa/StatisticheThread.class
+casa/simulation_src_2019/Simulator.class
+serverAmministratore/StartServer.class
+serverAmministratore/services/StatsService.class
+casa/simulation_src_2019/Measurement.class
+casa/simulation_src_2019/Buffer.class
+serverAmministratore/beans/Statistica.class
+casa/StatisticheThread$1.class
+casa/simulation_src_2019/SmartMeterSimulator.class
