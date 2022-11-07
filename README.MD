@@ -14,3 +14,6 @@ To launch a "main" from the command line:
 mvn package exec:java -Dexec.mainClass=chat.ChatServer
 
 (replace "chat.ChatServer" with the class containing a main method that you need to launch)
+
+
+The file "progetto di sistemi distribuiti e pervasivi.pdf" contains the presentation (in Italian) I used to expose the structure of my project to the professor.
